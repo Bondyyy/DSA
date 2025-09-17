@@ -1,0 +1,98 @@
+
+/*###Begin banned keyword - each of the following line if appear in code will raise error. regex supported
+define
+include
+using
+###End banned keyword*/
+
+#include <iostream>
+#include <cstring>
+#include <string>
+using namespace std;
+
+//###INSERT CODE HERE -
+struct node{
+    int info;
+    node *next;
+};
+
+struct List{
+    node *head;
+    node *tail;
+};
+
+void Init(List &L){
+    L.head = NULL;
+    L.tail = NULL;
+}
+
+node *Createnode(int x){
+    node *p = new node;
+    p->info = x;
+    p->next = NULL;
+    return p;
+}
+
+node* findMax(List L) {
+    node* p = L.head;
+    node* m = nullptr;
+    if (p == NULL) {
+        cout << "List is empty";
+        return nullptr;
+    }
+    m = p;
+    while (p != NULL) {
+        if (p->info > m->info) {
+            m = p;
+        }
+        p = p->next;
+    }
+    return m;
+}
+
+void addTail(List &L, int x){
+    node *p = Createnode(x);
+    if(L.head == NULL){
+        L.head = L.tail = p;
+    }
+    else {
+        L.tail->next = p;
+        L.tail = p;
+    }
+}
+
+void inputList(List &L, int n){
+    for(int i=0;i<n;i++){
+        int x; cin>>x;
+        addTail(L,x);
+    }
+}
+
+void outputList(List &L){
+    node* p = L.head;
+    if(p == NULL){
+        cout<<"List is empty";
+        return ;
+    }
+    while (p != NULL) {
+        cout << p->info << " ";
+        p = p->next;
+    }
+}
+int main()
+{
+    List L;
+    Init(L);
+    int n; cout<<"Enter a number: "; cin>>n;
+    cout<<"\nEnter a sequence of "<<n<<" numbers: ";
+    inputList(L,n);
+    cout<<"\nThe created Linked List: ";
+    outputList(L);
+
+
+    cout<<"\nThe maximum value: ";
+    node *p = findMax(L);
+    if(p) cout<<p->info;
+
+    return 0;
+}
